@@ -103,7 +103,8 @@ const Details = () => {
                 alt={detail.title}
                 width={500}
                 height={300}
-                className="w-full h-auto max-w-md lg:max-w-xl mx-auto object-cover rounded-lg"
+                className="w-full h-auto max-w-full mx-auto object-cover rounded-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             <div

@@ -18,7 +18,7 @@ interface Testimonial {
 }
 
 const Testimonials = () => {
-  const [testimonials, setTestimonials] = useState<Testimonial[] | null>(null);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -28,30 +28,25 @@ const Testimonials = () => {
         const response = await fetch(
           "https://admin.clickpoint.com.np/public/api/testimonials",
           {
-            headers: {
-              Accept: "application/json",
-            },
-          },
+            headers: { Accept: "application/json" },
+          }
         );
 
         if (!response.ok) {
           throw new Error(
-            `Failed to fetch testimonials: ${response.status} ${response.statusText}`,
+            `Failed to fetch testimonials: ${response.status} ${response.statusText}`
           );
         }
 
         const data: Testimonial[] = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setTestimonials(data);
-        } else {
+        if (!Array.isArray(data) || data.length === 0) {
           throw new Error("No testimonials found");
         }
-      } catch (err: unknown) {
-        const error = err instanceof Error 
-          ? err 
-          : new Error("An unknown error occurred");
-        setError(error);
-        console.error("Error fetching testimonials:", error);
+
+        setTestimonials(data);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error("An unknown error occurred"));
+        console.error("Error fetching testimonials:", err);
       } finally {
         setLoading(false);
       }
@@ -66,18 +61,18 @@ const Testimonials = () => {
 
   if (error) {
     return (
-      <section className="text-center text-red-500 font-semibold"> 
+      <section className="text-center text-red-500 font-semibold">
         Error loading testimonials: {error.message}
       </section>
     );
   }
 
-  if (!testimonials) { 
+  if (testimonials.length === 0) {
     return <section className="text-center font-semibold">No testimonials available.</section>;
   }
 
   return (
-    <section id="testimonials" className="relative py-16 bg-gray-900">
+    <section id="testimonials" className="relative py-16 bg-gray-900 overflow-hidden">
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-custom-blue to-transparent" />
       <div className="absolute inset-0 z-0">
         <Image
@@ -88,17 +83,17 @@ const Testimonials = () => {
         />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 overflow-hidden">
         <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={30}
           slidesPerView={1}
-          loop={true}
+          loop={testimonials.length > 1} // Ensures loop works properly
           speed={600}
           centeredSlides={true}
           autoplay={{ delay: 5000 }}
           pagination={{ clickable: true }}
-          className="swiper-init"
+          className="swiper-init overflow-visible"
         >
           {testimonials.map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
@@ -135,7 +130,6 @@ const Testimonials = () => {
               </div>
             </SwiperSlide>
           ))}
-
           <div className="swiper-pagination !bottom-0 mt-8" />
         </Swiper>
       </div>

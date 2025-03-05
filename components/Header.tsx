@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
@@ -81,7 +80,7 @@ const Header = () => {
           )}
         </div>
         <nav className="hidden md:flex space-x-8 font-sans">
-          {["home", "about", "features", "team"].map((item) => (
+          {["home", "about", "features", "team", "blog"].map((item) => (
             <button
               key={item}
               onClick={() => handleSmoothScroll(item)}
@@ -99,33 +98,6 @@ const Header = () => {
               ></span>
             </button>
           ))}
-          <div
-            className="relative group"
-            onMouseEnter={() => setIsDropdownOpen(true)}
-            onMouseLeave={() => setIsDropdownOpen(false)}
-          >
-            <button className="flex items-center text-gray-300 hover:text-white transition-all duration-300">
-              Dropdown
-              <FiChevronDown className="ml-2 h-5 w-5" />
-            </button>
-            {isDropdownOpen && (
-              <div
-                className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10"
-                onMouseEnter={() => setIsDropdownOpen(true)}
-                onMouseLeave={() => setIsDropdownOpen(false)}
-              >
-                {["Dropdown1", "DropDown2", "Dropdown3"].map((dropdownItem) => (
-                  <button
-                    key={dropdownItem}
-                    onClick={() => handleSmoothScroll(dropdownItem)}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 capitalize"
-                  >
-                    {dropdownItem}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
           <button
             onClick={() => handleSmoothScroll("contact")}
             className="relative group text-gray-300 hover:text-white transition-all duration-300"
@@ -165,7 +137,7 @@ const Header = () => {
                 </button>
               </div>
               <nav className="flex flex-col mx-6 font-nav">
-                {["home", "about", "features", "gallery", "team", "pricing"].map(
+                {["home", "about", "features", "team", "blog"].map(
                   (item) => (
                     <button
                       key={item}
@@ -179,30 +151,6 @@ const Header = () => {
                     </button>
                   )
                 )}
-                <div className="relative group">
-                  <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex justify-between items-center py-3 text-gray-800 hover:text-green-600 text-left w-full"
-                    >
-                    Dropdown
-                    <FiChevronDown className="ml-2 h-5 w-5" />
-                  </button>
-                  {isDropdownOpen && (
-                    <div className="absolute left-4 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                      {["Dropdown1", "Dropdown2", "Dropdown3"].map(
-                        (dropdownItem) => (
-                          <button
-                            key={dropdownItem}
-                            onClick={() => handleSmoothScroll(dropdownItem)}
-                            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 capitalize"
-                          >
-                            {dropdownItem}
-                          </button>
-                        )
-                      )}
-                    </div>
-                  )}
-                </div>
                 <button
                   onClick={() => handleSmoothScroll("contact")}
                   className="py-3 text-gray-800 hover:text-green-600 text-left"

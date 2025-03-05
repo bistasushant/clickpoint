@@ -17,11 +17,10 @@ interface AboutData {
   services: {
     service_title: string;
     service_content: string;
-    service_icon: string; // Icon name as string
+    service_icon: string; 
   }[];
 }
 
-// Map of icon string names to actual icon components
 const iconMap: Record<string, React.ElementType> = {
   BsBuildings,
   BsClipboardPulse,
@@ -70,7 +69,7 @@ const About = () => {
   return (
     <section id="about" className="py-12 md:py-16 lg:py-24 bg-white" data-aos="fade-up">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-8 xl:gap-12">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-8 xl:gap-12 overflow-hidden">
           {/* Content Column */}
           <div className="lg:w-5/12 space-y-4">
             <div className="bg-gray-100 rounded-md w-fit px-3 py-2">

@@ -7,8 +7,71 @@ import {
 } from "@/components/ui/accordion";
 import { GoQuestion } from "react-icons/go";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import Loading from "./ui/loading";
 
 const Question = () => {
+  const [faqData, setFaqData] = useState<{
+    title: string;
+    description: string;
+    qa: { question: string; answer: string }[];
+  } | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchFAQData = async () => {
+      try {
+        const response = await fetch("https://admin.clickpoint.com.np/public/api/frequest-questions", {
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setFaqData(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFAQData();
+  }, []);
+  if (loading) {
+    return (
+      <section id="features" className="py-12 md:py-16 bg-indigo-50" data-aos="fade-up">
+        <div className="container mx-auto px-4">
+          <Loading />
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="features" className="py-12 md:py-16 bg-indigo-50" data-aos="fade-up">
+        <div className="container mx-auto px-4">
+          <p className="text-red-600 font-semibold">{error}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!faqData) {
+    return (
+      <section id="features" className="py-12 md:py-16 bg-indigo-50" data-aos="fade-up">
+        <div className="container mx-auto px-4">
+          <p className="text-center font-semibold">FAQ data is not available.</p>
+        </div>
+      </section>
+    );
+  }
   return (
     <section
       id="features"
@@ -22,63 +85,23 @@ const Question = () => {
               Frequently Asked <span className="font-semibold">Questions</span>
             </span>
             <p className="mt-2 text-sm md:text-base text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis
-              aute irure dolor in reprehenderit
+              {faqData.description}
             </p>
 
             <Accordion type="single" collapsible className="w-full mt-4">
-              <AccordionItem value="item-1">
+              {faqData.qa.map((item, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
                 <AccordionTrigger className="text-left text-sm md:text-base text-indigo-900 font-bold data-[state=open]:text-green-500">
                   <div className="flex items-center gap-2">
                     <GoQuestion className="w-6 h-6 flex-shrink-0 text-green-600" />
-                    Non consectetur a erat nam at lectus urna duis?
+                    {item.question}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="text-sm md:text-base font-heading text-gray-800">
-                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id
-                  volutpat lacus laoreet non curabitur gravida. Venenatis lectus
-                  magna fringilla urna porttitor rhoncus dolor purus non.
+                <AccordionContent className="text-sm md:text-base font-heading text-gray-800 text-justify">
+                  {item.answer}
                 </AccordionContent>
               </AccordionItem>
-            </Accordion>
-
-            <Accordion type="single" collapsible className="w-full mt-4">
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="text-left text-sm md:text-base text-indigo-900 font-bold data-[state=open]:text-green-500">
-                  <div className="flex items-center gap-2">
-                    <GoQuestion className="w-6 h-6 flex-shrink-0 text-green-600" />
-                    Feugiat scelerisque varius morbi enim nunc faucibus a
-                    pellentesque?
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="text-sm md:text-base font-heading text-gray-800">
-                  Dolor sit amet consectetur adipiscing elit pellentesque
-                  habitant morbi. Id interdum velit laoreet id donec ultrices.
-                  Fringilla phasellus faucibus scelerisque eleifend donec
-                  pretium. Est pellentesque elit ullamcorper dignissim. Mauris
-                  ultrices eros in cursus turpis massa tincidunt dui.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-
-            <Accordion type="single" collapsible className="w-full mt-4">
-              <AccordionItem value="item-3">
-                <AccordionTrigger className="text-left text-sm md:text-base text-indigo-900 font-bold data-[state=open]:text-green-500">
-                  <div className="flex items-center gap-2">
-                    <GoQuestion className="w-6 h-6 flex-shrink-0 text-green-600" />
-                    Dolor sit amet consectetur adipiscing elit pellentesque?
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="text-sm md:text-base font-heading text-gray-800">
-                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices
-                  sagittis orci. Faucibus pulvinar elementum integer enim. Sem
-                  nulla pharetra diam sit amet nisl suscipit. Rutrum tellus
-                  pellentesque eu tincidunt. Lectus urna duis convallis convallis
-                  tellus. Urna molestie at elementum eu facilisis sed odio morbi
-                  quis
-                </AccordionContent>
-              </AccordionItem>
+              ))}
             </Accordion>
           </div>
 

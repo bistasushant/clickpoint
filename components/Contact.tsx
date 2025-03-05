@@ -17,6 +17,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "", 
     subject: "",
     message: "",
   });
@@ -87,13 +88,13 @@ const Contact = () => {
 
       const result = await response.json();
       if (result.success) {
-        toast.success(result.message); // Show success toast
-        setFormData({ name: "", email: "", subject: "", message: "" }); // Reset form
+        toast.success(result.message);
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" }); 
       } else {
-        toast.error("Failed to send message."); // Show error toast
+        toast.error("Failed to send message."); 
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Unknown error"); // Show error toast
+      toast.error(err instanceof Error ? err.message : "Unknown error");
     }
   };
 
@@ -181,7 +182,7 @@ const Contact = () => {
                 <BiEnvelope className="text-2xl text-green-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-indigo-900 mb-1">
+                <h3 className="text-lg font-bold text-indigo-900 mb-1">
                   Email Us
                 </h3>
                 <p className="text-dark font-light text-sm">
@@ -219,7 +220,19 @@ const Contact = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2">
+                <div>
+                  <input
+                    type="text"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="Your Phone Number" 
+                    className="w-full px-4 py-3 border border-gray-300 focus:border-green-500 focus:outline-none rounded-md"
+                    required
+                  />
+                </div>
+
+                <div>
                   <input
                     type="text"
                     name="subject"

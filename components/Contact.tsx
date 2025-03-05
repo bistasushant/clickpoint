@@ -215,14 +215,14 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Your Email"
-                    className="w-full px-4 py-3 border border-gray-300 focus:border-green-500 focus:outline-none rounded-md"
+                    className="w-full px-4 py-3 border border-gray-300 focus:border-green-500 focus:outline-none rounded-md max-w-full"
                     required
                   />
                 </div>
 
                 <div>
                   <input
-                    type="text"
+                    type="number"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}

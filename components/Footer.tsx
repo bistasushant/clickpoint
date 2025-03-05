@@ -102,7 +102,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Footer About */}
           <div>
-            <Link href="/" className="flex items-center ml-10">
+            <Link href="/" className="flex items-center justify-center md:justify-start">
               {logoUrl && (
                 <Image
                   src={logoUrl}
@@ -113,7 +113,7 @@ export default function Footer() {
                 />
               )}
             </Link>
-            <div className="mt-4">
+            <div className="mt-4 text-center md:text-left">
               <p
                 className="cursor-pointer hover:text-green-400"
                 onClick={handleAddressClick}
@@ -127,7 +127,7 @@ export default function Footer() {
                 <strong>Email:</strong> {contactInfo.email}
               </p>
             </div>
-            <div className="flex mt-4 space-x-4">
+            <div className="flex justify-center md:justify-start mt-4 space-x-4">
               {Object.entries(socialIcons).map(([key, Icon]) => {
                 const url = contactInfo[key as keyof typeof contactInfo];
                 return url ? (
@@ -143,8 +143,8 @@ export default function Footer() {
 
           {/* Useful Links */}
           <div className="footer-links">
-            <h4 className="text-lg font-semibold mb-4">Useful Links</h4>
-            <ul className="space-y-1.5 font-light">
+            <h4 className="text-lg font-semibold mb-4 text-center md:text-left">Useful Links</h4>
+            <ul className="space-y-1.5 font-light text-center md:text-left">
               <li>
                 <Link href="#" className="hover:text-green-400">
                   Home
@@ -175,8 +175,8 @@ export default function Footer() {
 
           {/* Our Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Our Services</h4>
-            <ul className="space-y-1.5 font-light">
+            <h4 className="text-lg font-semibold mb-4 text-center md:text-left">Our Services</h4>
+            <ul className="space-y-1.5 font-light text-center md:text-left">
               <li>
                 <Link href="#" className="hover:text-green-400">
                   Web Design
@@ -207,8 +207,8 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Our Newsletter</h4>
-            <p className="font-medium">
+            <h4 className="text-lg font-semibold mb-4 text-center md:text-left">Our Newsletter</h4>
+            <p className="font-medium text-center md:text-left">
               Subscribe to our newsletter and receive the latest news about our
               products and services!
             </p>
@@ -217,18 +217,18 @@ export default function Footer() {
               method="post"
               className="php-email-form mt-4"
             >
-              <div className="flex">
+              <div className="flex flex-col md:flex-row">
                 <input
                   type="email"
                   name="email"
-                  className="border border-gray-600 focus:bg-violet-950 focus:border-green-500 text-white rounded-l-md py-2 px-4 focus:outline-none flex-grow"
+                  className="border border-gray-600 focus:bg-violet-950 focus:border-green-500 text-white rounded-md py-2 px-4 focus:outline-none flex-grow mb-2 md:mb-0 md:mr-2"
                   placeholder="Your Email"
                   required
                 />
                 <input
                   type="submit"
                   value="Subscribe"
-                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-r-md cursor-pointer"
+                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md cursor-pointer"
                 />
               </div>
             </form>

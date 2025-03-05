@@ -71,12 +71,12 @@ const Header = () => {
         <div className="flex items-center flex-shrink-0">
           {logoUrl && (
             <Image
-              src={logoUrl}
-              alt="Logo"
-              width={160}
-              height={90}
-              className="rounded-lg cursor-pointer"
-              onClick={() => handleSmoothScroll("home")}
+            src={logoUrl}
+            alt="Logo"
+            width={160}   
+            height={90} 
+            className="rounded-lg cursor-pointer w-32 h-auto md:w-40 md:h-auto" 
+            onClick={() => handleSmoothScroll("home")}
             />
           )}
         </div>
@@ -182,9 +182,10 @@ const Header = () => {
                 <div className="relative group">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="py-3 text-gray-800 hover:text-green-600 text-left"
-                  >
+                    className="flex justify-between items-center py-3 text-gray-800 hover:text-green-600 text-left w-full"
+                    >
                     Dropdown
+                    <FiChevronDown className="ml-2 h-5 w-5" />
                   </button>
                   {isDropdownOpen && (
                     <div className="absolute left-4 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
